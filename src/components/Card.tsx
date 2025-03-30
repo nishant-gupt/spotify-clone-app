@@ -13,7 +13,6 @@ const Card: React.FC<CardProps> = ({
   image, 
   title, 
   subtitle, 
-  type,
   variant = 'default'
 }) => {
   return (

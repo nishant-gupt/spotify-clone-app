@@ -1,19 +1,14 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePageContainer from './pages/HomePageContainer';
-import Navbar from './components/Navbar';
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#121212]">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePageContainer />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePageContainer />} />
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;

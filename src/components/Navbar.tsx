@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import spotifyLogo from '../assets/spotify-logo.png';
 import searchIcon from '../assets/search.svg';

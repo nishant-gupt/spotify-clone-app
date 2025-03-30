@@ -11,18 +11,12 @@ interface SectionProps {
     subtitle: string;
     type: 'playlist' | 'artist' | 'album';
   }[];
-  columns?: {
-    mobile: number;
-    tablet: number;
-    desktop: number;
-  };
 }
 
 const Section: React.FC<SectionProps> = ({ 
   title, 
   subtitle, 
-  items, 
-  columns = { mobile: 2, tablet: 3, desktop: 6 } 
+  items
 }) => {
   return (
     <section>

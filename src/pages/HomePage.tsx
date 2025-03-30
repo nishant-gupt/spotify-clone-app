@@ -79,7 +79,6 @@ const HomePage: React.FC<HomePageProps> = ({
           title={featuredPlaylist.title}
           subtitle={featuredPlaylist.subtitle}
           items={featuredPlaylist.items}
-          columns={{ mobile: 1, tablet: 2, desktop: 6 }}
         />
         <Section {...recentlyPlayed} />
         <Section {...madeForYou} />
