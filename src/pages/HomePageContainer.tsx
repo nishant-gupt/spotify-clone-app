@@ -209,10 +209,10 @@ const HomePageContainer = () => {
   useEffect(() => {
     const syncSpotifyData = async () => {
       try {
-        // Use client credentials flow
-        const sdk = SpotifyApi.withClientCredentials(
+        // Use user authorization flow
+        const sdk = SpotifyApi.withUserAuthorization(
           "8a5c136e73b24145a3f36fec89f3cb47",
-          "fa6b93ecd4d349ab999bf9d3b46b9764",
+          "http://localhost:5173/callback",
           ["playlist-read-private"]
         );
 
@@ -227,7 +227,10 @@ const HomePageContainer = () => {
         ];
         
         const artistPromises = artistIds.map(id => sdk.artists.get(id));
-        const artists = await Promise.all(artistPromises);
+        const [artists, userPlaylists] = await Promise.all([
+          Promise.all(artistPromises),
+          sdk.currentUser.playlists.playlists(6)
+        ]);
 
         // Update with public data
         setData((prevData) => ({
@@ -239,6 +242,15 @@ const HomePageContainer = () => {
               title: artist.name,
               subtitle: "Artist",
               type: "artist" as const,
+            }))
+          },
+          featuredPlaylist: {
+            ...prevData.featuredPlaylist,
+            items: userPlaylists.items.slice(0, 6).map(playlist => ({
+              image: playlist.images[0]?.url || "https://picsum.photos/seed/featured/600/600",
+              title: playlist.name,
+              subtitle: playlist.description || "Your Playlist",
+              type: "playlist" as const,
             }))
           }
         }));
