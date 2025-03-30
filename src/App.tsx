@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState<Awaited<ReturnType<SpotifyApi["search"]>>>();
+  
+  useEffect(() => {
+    const getSpotifyData = async () => {
+      try {
+        const sdk = SpotifyApi.withClientCredentials(
+          "8a5c136e73b24145a3f36fec89f3cb47",
+          "fa6b93ecd4d349ab999bf9d3b46b9764",
+          [
+            "playlist-read-private",
+            "user-read-private",
+            "playlist-read-collaborative",
+          ]
+        );
+        setItems(await sdk.search("The Beatles", ["artist"]));
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        if (items?.artists?.items) {
+          console.table(
+            items.artists.items.map((item) => ({
+              name: item.name,
+              followers: item.followers.total,
+              popularity: item.popularity,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching Spotify data:", error);
+      }
+    };
+
+    getSpotifyData();
+  }, [items]);
+
+  return <h1>Spotify</h1>;
 }
 
-export default App
+export default App;
