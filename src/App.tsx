@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 
@@ -36,7 +37,17 @@ function App() {
     getSpotifyData();
   }, [items]);
 
-  return <h1 className="font-bold underline">Spotify</h1>;
+  return (
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<h1 className="text-3xl font-bold underline">Spotify Home</h1>} />
+          <Route path="/browse" element={<h1 className="text-3xl font-bold underline">Browse Page</h1>} />
+          <Route path="/library" element={<h1 className="text-3xl font-bold underline">Library Page</h1>} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
