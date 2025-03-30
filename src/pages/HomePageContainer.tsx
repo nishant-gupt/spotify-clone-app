@@ -209,13 +209,14 @@ const HomePageContainer = () => {
   useEffect(() => {
     const syncSpotifyData = async () => {
       try {
+        // Use client credentials flow
         const sdk = SpotifyApi.withClientCredentials(
           "8a5c136e73b24145a3f36fec89f3cb47",
           "fa6b93ecd4d349ab999bf9d3b46b9764",
           ["playlist-read-private"]
         );
 
-        // Get multiple popular artists
+        // Get popular artists
         const artistIds = [
           "0du5cEVh5yTK9QJze8zA0C", // Drake
           "06HL4z0CvFAxyc27GXpf02", // Taylor Swift
@@ -228,9 +229,7 @@ const HomePageContainer = () => {
         const artistPromises = artistIds.map(id => sdk.artists.get(id));
         const artists = await Promise.all(artistPromises);
 
-        console.log("Artists data:", artists);
-
-        // Update only the artists section with real data
+        // Update with public data
         setData((prevData) => ({
           ...prevData,
           popularArtists: {
@@ -241,7 +240,7 @@ const HomePageContainer = () => {
               subtitle: "Artist",
               type: "artist" as const,
             }))
-          },
+          }
         }));
 
         setIsLoading(false);

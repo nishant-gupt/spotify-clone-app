@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePageContainer from './pages/HomePageContainer';
 import Navbar from './components/Navbar';
+import Callback from './pages/Callback';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePageContainer />} />
+          <Route path="/callback" element={<Callback />} />
         </Routes>
       </div>
     </Router>
