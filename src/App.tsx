@@ -36,7 +36,7 @@ function App() {
     getSpotifyData();
   }, [items]);
 
-  return <h1>Spotify</h1>;
+  return <h1 className="font-bold underline">Spotify</h1>;
 }
 
 export default App;
