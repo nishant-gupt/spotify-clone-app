@@ -215,22 +215,32 @@ const HomePageContainer = () => {
           ["playlist-read-private"]
         );
 
-        // Get a single artist (Drake's ID)
-        const artist = await sdk.artists.get("0du5cEVh5yTK9QJze8zA0C");
+        // Get multiple popular artists
+        const artistIds = [
+          "0du5cEVh5yTK9QJze8zA0C", // Drake
+          "06HL4z0CvFAxyc27GXpf02", // Taylor Swift
+          "6eUKZXaKkcviH0Ku9w2n3V", // Ed Sheeran
+          "1Xyo4u8uXC1ZmMpatF05PJ", // The Weeknd
+          "246dkjvS1zLTtiykXe5h60", // Post Malone
+          "0Y5tJX1MQlPlqiwlOH1tJY"  // Travis Scott
+        ];
+        
+        const artistPromises = artistIds.map(id => sdk.artists.get(id));
+        const artists = await Promise.all(artistPromises);
 
-        console.log("Artist:", artist);
+        console.log("Artists data:", artists);
 
-        // Update the data with real Spotify data
+        // Update only the artists section with real data
         setData((prevData) => ({
           ...prevData,
           popularArtists: {
             ...prevData.popularArtists,
-            items: [{
+            items: artists.map(artist => ({
               image: artist.images[0]?.url || "https://picsum.photos/seed/artist/400/400",
               title: artist.name,
               subtitle: "Artist",
               type: "artist" as const,
-            }]
+            }))
           },
         }));
 
