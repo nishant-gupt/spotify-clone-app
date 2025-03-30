@@ -1,6 +1,5 @@
 import React from 'react';
 import Section from '../components/Section';
-import Card from '../components/Card';
 
 interface SpotifyItem {
   image: string;
@@ -21,23 +20,15 @@ interface SectionData {
 }
 
 interface HomePageProps {
-  recentListening: SpotifyItem[];
-  featuredPlaylist: SectionData;
-  recentlyPlayed: SectionData;
-  madeForYou: SectionData;
   popularArtists: SectionData;
-  popularPlaylists: SectionData;
+  featuredPlaylist: SectionData;
   isLoading?: boolean;
   error?: string | null;
 }
 
 const HomePage: React.FC<HomePageProps> = ({
-  recentListening,
-  featuredPlaylist,
-  recentlyPlayed,
-  madeForYou,
   popularArtists,
-  popularPlaylists,
+  featuredPlaylist,
   isLoading = false,
   error = null
 }) => {
@@ -59,31 +50,9 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <div className="w-full bg-[#121212] min-h-screen pt-[64px] px-8 pb-8">
-      <div className="w-full max-w-[1400px] mx-auto space-y-12">
-        <section className="mb-12">
-          <h2 className="text-[32px] font-bold mb-4 text-white">Good Afternoon</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {recentListening.map((item, index) => (
-              <Card
-                key={index}
-                image={item.image}
-                title={item.title}
-                subtitle={item.subtitle}
-                type={item.type}
-                variant="good-afternoon"
-              />
-            ))}
-          </div>
-        </section>
-        <Section
-          title={featuredPlaylist.title}
-          subtitle={featuredPlaylist.subtitle}
-          items={featuredPlaylist.items}
-        />
-        <Section {...recentlyPlayed} />
-        <Section {...madeForYou} />
+      <div className="max-w-[1400px] mx-auto">
+        <Section {...featuredPlaylist} />
         <Section {...popularArtists} />
-        <Section {...popularPlaylists} />
       </div>
     </div>
   );
