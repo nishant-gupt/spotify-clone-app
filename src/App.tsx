@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [items, setItems] = useState<Awaited<ReturnType<SpotifyApi["search"]>>>();
@@ -40,11 +41,14 @@ function App() {
   return (
     <Router>
       <div>
-        <Routes>
-          <Route path="/" element={<h1 className="text-3xl font-bold underline">Spotify Home</h1>} />
-          <Route path="/browse" element={<h1 className="text-3xl font-bold underline">Browse Page</h1>} />
-          <Route path="/library" element={<h1 className="text-3xl font-bold underline">Library Page</h1>} />
-        </Routes>
+        <Navbar />
+        <main className="pt-20 p-8">
+          <Routes>
+            <Route path="/" element={<h1 className="text-3xl font-bold underline">Home</h1>} />
+            <Route path="/browse" element={<h1 className="text-3xl font-bold underline">Browse</h1>} />
+            <Route path="/library" element={<h1 className="text-3xl font-bold underline">Library</h1>} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
