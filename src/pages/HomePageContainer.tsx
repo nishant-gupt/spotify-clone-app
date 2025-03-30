@@ -201,11 +201,13 @@ const dummyData = {
 
 const HomePageContainer = () => {
   return (
-    <HomePage
-      {...dummyData}
-      isLoading={false}
-      error={null}
-    />
+    <div className="pt-16">
+      <HomePage
+        {...dummyData}
+        isLoading={false}
+        error={null}
+      />
+    </div>
   );
 };
 
